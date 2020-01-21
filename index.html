@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="style.css" />
+    <title>Weather App</title>
+
+</head>
+<body>
+       <h1>Weather Dashboard</h1>
+              <div id="left-column" class="container-sm">
+                    <div class="col-4">
+                        <input type="search" id="searchBox" placeholder="">
+                        <button type="button" id="search-button">Search</button>
+                        <ul class="list-group">
+                            <li class="list-group-item">Denver</li> <!-- add class active in bootstrap for highlights-->
+                            </ul>
+                    </div>
+                    <div class="col-8 hide">
+                        <div id="city-forecast">
+                            <!-- <h2 id= "cityHeadline"></h2>
+                            <br>
+                            <p id = "temperature"></p>
+                            <br>
+                            <p id = "humidity"></p>
+                            <br>
+                            <p id ="wind-speed"></p>
+                            <br>
+                            <p id ="uv-Index"></p> -->
+                        </div>
+                        <div id="5-Day">
+                            <!--Add in holders for each day-->
+                        </div>
+                    </div>
+              </div>
+       
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src ="script.js"></script>
+</body>
+</html>
