@@ -4,3 +4,9 @@ h1 {
     color:white;
     padding: 12px;
 }
+.hide{
+    display: none;
+}
+#city-forecast{
+    background-color: blueviolet;
+}
