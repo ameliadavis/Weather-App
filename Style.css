@@ -8,5 +8,10 @@ h1 {
     display: none;
 }
 #city-forecast{
-    background-color: blueviolet;
+    padding: 3%;
+    background-color:white;
+    border: 1px solid black;
+}
+.col-4{
+    background-color: #ebeff1;
 }
