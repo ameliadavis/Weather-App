@@ -3,7 +3,9 @@ var userSearch = $("#searchBox").val();
 // This is our API key
 var APIKey = "166a433c57516f51dfab1f7edaed8413";
 var cityForecastEl = $("#city-forecast");
-var listGroup = $(".list-group");
+var listGroup = $(".list-group")
+// var cities = [];
+// var listGroup = $(".list-group");
 var FiveDayEl = $("#5-Day");
 var day1 = $(".day1");
 var day2 = $(".day2");
@@ -11,16 +13,6 @@ var day3 = $(".day3");
 var day4 = $(".day4");
 var day5 = $(".day5");
 let cities = JSON.parse(localStorage.getItem("listGroup")) || []; // grab this array from local storage or set it to a blank array
-
-// set local storage
-function updateStorage () {
-  localStorage.setItem("listGroup", JSON.stringify(cities));
-}
-// on page load populate buttons list from local storage
-// $(document).ready(function(){
-//   $(".list-group").append(JSON.parse(localStorage.getItem("listGroup")));
-// }),
-
 
 //print cities list to the screen each  time one is added 
 function renderButtons(){
@@ -38,10 +30,7 @@ $("#search-button").on("click", function() {
      event.preventDefault(); // prevent default
      var userSearch = $("#searchBox").val(); 
      cities.push(userSearch);
-     cityForecastEl.empty();
-     day1.empty();
      renderButtons();
-     updateStorage();
 
 // Here we are building the URL we need to query the database
 // var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
@@ -62,10 +51,16 @@ $.ajax({
     // console.log(currentTemp);
     var humidityEl = response.list[0].main.humidity;
     var windSpeedEl = response.list[0].wind.speed;
-    // var img ="http://openweathermap.org/img/wn/10d@2x.png"
-    var img = "http://openweathermap.org/img/wn/"+ response.list[0].weather["0"].icon + "@2x.png";
+    // var img = "http://openweathermap.org/img/w/" + userSearch+ data.weather[0].icon + ".png";
+    // console.log(img);
     // var uvIndexEl = response.main;// not sure where to grab this from
-  
+
+    var img = $("<img>").attr("src", queryURL + response.list[0].weather[0].icon + ".png");
+    // var headline = result[i].headline.print_headline;
+    // var newHeandlineEL =$("<h1>");
+    // newHeandlineEL.text(headline);
+    // newArticle.append(newHeandlineEL);
+
     //Create div to hold the information we need from response
     var cityHeadline = $("<h2>");
     var temperature = $("<p>");
@@ -78,10 +73,10 @@ $.ajax({
     cityHeadline.text(cityName + " " + Date)
     temperature.text("Current Temp: " + currentTemp + "°");
     humidity.text("Humidity: " + humidityEl + "%");
-    windSpeed.text("Wind Speed: " + windSpeedEl);
+    windSpeed.text("Wind Speed: " + windSpeedEl + " mph");
     imgDisplay.attr("src", img);
-    // imgDisplay.attr("src", img + "@2x.png");
     // imgDisplay.attr("src","http://openweathermap.org/img/w/" + + img + ".png");
+    // console.log(temperature);
     // uvIndex.text = "UV Index: " + uvIndexEl;
 
     //add to exisitng HTMl on page 
@@ -90,10 +85,10 @@ $.ajax({
     cityForecastEl.append(humidity);
     cityForecastEl.append(windSpeed);
     // cityForecastEl.append(uvIndex);
-  //  cityForecastEl.append(imgDisplay);
+    cityForecastEl.append(imgDisplay);
     console.log(cityForecastEl);
 
-// ======================
+    // ======================
 // 5 day forcast 
 // ======================
 
@@ -229,14 +224,8 @@ $.ajax({
     day5.append(day5ForcastHumidity);
     day5.append(day5forcastTemp);
    
-
-
     //remove the Hide class from the entire div. 
     cityForecastEl.removeAttr("class", "hide");
-   
 
-  });// closing the .then function
+});// closing the .then function
 });// closing the search button listener function
-
-// function for the 5 day forcast 
-
