@@ -24,6 +24,12 @@ function renderButtons(){
             $(".list-group").append(newButton);
           }
 }
+// set local storage
+function updateStorage() { 
+  const listGroup = localStorage.setItem("listGroup", JSON.stringify(cities));
+   console.log(listGroup);
+}
+
 
 // search button event listener and add to cities array 
 $("#search-button").on("click", function() {
@@ -31,6 +37,7 @@ $("#search-button").on("click", function() {
      var userSearch = $("#searchBox").val(); 
      cities.push(userSearch);
      renderButtons();
+     updateStorage();
 
 // Here we are building the URL we need to query the database
 // var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
@@ -48,25 +55,17 @@ $.ajax({
     var cityName = response.city.name ;
     var Date = moment().format('MMMM Do YYYY'); 
     var currentTemp = response.list[0].main.temp;
-    // console.log(currentTemp);
     var humidityEl = response.list[0].main.humidity;
     var windSpeedEl = response.list[0].wind.speed;
-    // var img = "http://openweathermap.org/img/w/" + userSearch+ data.weather[0].icon + ".png";
-    // console.log(img);
-    // var uvIndexEl = response.main;// not sure where to grab this from
-
-    var img = $("<img>").attr("src", queryURL + response.list[0].weather[0].icon + ".png");
-    // var headline = result[i].headline.print_headline;
-    // var newHeandlineEL =$("<h1>");
-    // newHeandlineEL.text(headline);
-    // newArticle.append(newHeandlineEL);
+    // var img = $("<img>").attr("src", queryURL + response.list[0].weather[0].icon + ".png");
+  
 
     //Create div to hold the information we need from response
     var cityHeadline = $("<h2>");
     var temperature = $("<p>");
     var humidity = $("<p>");
     var windSpeed = $("<p>");
-    var imgDisplay = $("<img>");
+    // var imgDisplay = $("<img>");
     // var uvIndex = $("<p>");
 
     // add the text information information to the appropriate HTML element
@@ -74,7 +73,7 @@ $.ajax({
     temperature.text("Current Temp: " + currentTemp + "°");
     humidity.text("Humidity: " + humidityEl + "%");
     windSpeed.text("Wind Speed: " + windSpeedEl + " mph");
-    imgDisplay.attr("src", img);
+    // imgDisplay.attr("src", img);
     // imgDisplay.attr("src","http://openweathermap.org/img/w/" + + img + ".png");
     // console.log(temperature);
     // uvIndex.text = "UV Index: " + uvIndexEl;
@@ -85,7 +84,7 @@ $.ajax({
     cityForecastEl.append(humidity);
     cityForecastEl.append(windSpeed);
     // cityForecastEl.append(uvIndex);
-    cityForecastEl.append(imgDisplay);
+    // cityForecastEl.append(imgDisplay);
     console.log(cityForecastEl);
 
     // ======================
@@ -109,7 +108,7 @@ $.ajax({
     // set text
     day1ForcastDate.text("date: " + day1ForcastDateEL);
     day1ForcastHumidity.text("Humidity: " + day1ForcastHumidityEl + "%");
-    day1forcastTemp.text("Temp:" + day1forcastTempEl + "°");
+    day1forcastTemp.text("Temp: " + day1forcastTempEl + "°");
     img1Display.attr("src", img1);
 
     // append 
@@ -229,3 +228,7 @@ $.ajax({
 
 });// closing the .then function
 });// closing the search button listener function
+
+$(document).ready(function(){
+  renderButtons();
+})
