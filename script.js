@@ -3,7 +3,8 @@ var userSearch = $("#searchBox").val();
 // This is our API key
 var APIKey = "166a433c57516f51dfab1f7edaed8413";
 var cityForecastEl = $("#city-forecast");
-var listGroup = $(".list-group")
+var listGroup = $(".list-group");
+var listGroupItemEL = $(".list-group-item");
 // var cities = [];
 // var listGroup = $(".list-group");
 var FiveDayEl = $("#5-Day");
@@ -13,6 +14,13 @@ var day3 = $(".day3");
 var day4 = $(".day4");
 var day5 = $(".day5");
 let cities = JSON.parse(localStorage.getItem("listGroup")) || []; // grab this array from local storage or set it to a blank array
+
+// [...new set (cities)];
+// cities.filter((item,index)=> cities.indexOf(item)=== index);
+// cities.reduce((unique, item) => 
+// unique.includes(item)? unique : [...unique, item], []);
+// console.log(cities);
+
 
 //print cities list to the screen each  time one is added 
 function renderButtons(){
@@ -24,10 +32,12 @@ function renderButtons(){
             $(".list-group").append(newButton);
           }
 }
+// event listener for new buttons
+
+
 // set local storage
 function updateStorage() { 
-  const listGroup = localStorage.setItem("listGroup", JSON.stringify(cities));
-   console.log(listGroup);
+localStorage.setItem("listGroup", JSON.stringify(cities));
 }
 
 
@@ -231,4 +241,10 @@ $.ajax({
 
 $(document).ready(function(){
   renderButtons();
+  $(".list-group-item").on("click", function(){
+    var buttonName = $(this).text;
+    console.log("register the click" + buttonName);
+  })
 })
+
+
