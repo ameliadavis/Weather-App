@@ -12,6 +12,9 @@ h1 {
     background-color:white;
     border: 1px solid black;
 }
+.col-8{
+    padding: 3%;
+}
 .col-4{
     background-color: #ebeff1;
 }

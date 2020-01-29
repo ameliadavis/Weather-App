@@ -54,7 +54,7 @@ $("#search-button").on("click", function() {
 // + "&q="+ userSearch + "&units=imperial&appid=" + APIKey;
 
 // var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + userSearch + "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
-var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + userSearch + "&appid=166a433c57516f51dfab1f7edaed8413&units=imperial"
+var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userSearch + "&appid=166a433c57516f51dfab1f7edaed8413&units=imperial"
 
 $.ajax({
     url:queryURL ,
@@ -235,6 +235,11 @@ $.ajax({
    
     //remove the Hide class from the entire div. 
     cityForecastEl.removeAttr("class", "hide");
+
+    // $(".list-group-item").on("click", function(){
+    //   var buttonName = $(this).text;
+    //   console.log("register the click" + buttonName);
+    // });
 
 });// closing the .then function
 });// closing the search button listener function
