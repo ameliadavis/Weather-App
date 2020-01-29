@@ -107,7 +107,7 @@ $.ajax({
     console.log(day1ForcastDateEL);
     var day1ForcastHumidityEl= response.list[6].main.humidity;
     var day1forcastTempEl= response.list[6].main.temp;
-    var img1 = "http://openweathermap.org/img/wn/"+ response.list[0].weather["0"].icon + "@2x.png";
+    var img1 = "https://openweathermap.org/img/wn/"+ response.list[0].weather["0"].icon + "@2x.png";
 
      // set elements
      var day1ForcastDate = $("<p>");
@@ -135,7 +135,7 @@ $.ajax({
     console.log(day1ForcastDateEL);
     var day2ForcastHumidityEl= response.list[14].main.humidity;
     var day2forcastTempEl= response.list[14].main.temp;
-    var img2 = "http://openweathermap.org/img/wn/"+ response.list[14].weather["0"].icon + "@2x.png";
+    var img2 = "https://openweathermap.org/img/wn/"+ response.list[14].weather["0"].icon + "@2x.png";
 
      // set elements
      var day2ForcastDate = $("<p>");
@@ -162,7 +162,7 @@ $.ajax({
     console.log(day1ForcastDateEL);
     var day3ForcastHumidityEl= response.list[21].main.humidity;
     var day3forcastTempEl= response.list[21].main.temp;
-    var img3 = "http://openweathermap.org/img/wn/"+ response.list[21].weather["0"].icon + "@2x.png";
+    var img3 = "https://openweathermap.org/img/wn/"+ response.list[21].weather["0"].icon + "@2x.png";
 
      // set elements
      var day3ForcastDate = $("<p>");
@@ -188,7 +188,7 @@ $.ajax({
     var day4ForcastDateEL = response.list[28].dt_txt;
     var day4ForcastHumidityEl= response.list[28].main.humidity;
     var day4forcastTempEl= response.list[28].main.temp;
-    var img4 = "http://openweathermap.org/img/wn/"+ response.list[28].weather["0"].icon + "@2x.png";
+    var img4 = "https://openweathermap.org/img/wn/"+ response.list[28].weather["0"].icon + "@2x.png";
 
      // set elements
      var day4ForcastDate = $("<p>");
@@ -213,7 +213,7 @@ $.ajax({
     var day5ForcastDateEL = response.list[37].dt_txt;
     var day5ForcastHumidityEl= response.list[37].main.humidity;
     var day5forcastTempEl= response.list[37].main.temp;
-    var img5 = "http://openweathermap.org/img/wn/"+ response.list[37].weather["0"].icon + "@2x.png";
+    var img5 = "https://openweathermap.org/img/wn/"+ response.list[37].weather["0"].icon + "@2x.png";
 
      // set elements
      var day5ForcastDate = $("<p>");
