@@ -30,7 +30,7 @@ function renderButtons(){
         console.log(unique); 
         // Loop through the array of movies, then generate buttons for each movie in the array
           for (var i = 0; i< unique.length; i++){
-           var newButton= $("<li>").text(unique[i]);
+           var newButton= $("<button>").text(unique[i]);
            newButton.attr("class", "list-group-item");
             $(".list-group").append(newButton);
           }
@@ -61,12 +61,10 @@ $("#search-button").on("click", function() {
      $(".day4").empty();
      $(".day5").empty();
      $("input, select").val(" ");
+     callAjax(userSearchLT);
+});
 
-// Here we are building the URL we need to query the database
-// var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
-// + "&q="+ userSearch + "&units=imperial&appid=" + APIKey;
-
-// var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + userSearch + "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial"
+function callAjax(userSearch){
 var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userSearch + "&appid=166a433c57516f51dfab1f7edaed8413&units=imperial"
 
 $.ajax({
@@ -191,7 +189,8 @@ $.ajax({
      var img3Display= $("<img>");
 
     // set text
-    day3ForcastDate.text("date: " + day3ForcastDateEL);
+    day3ForcastDate.text("date: " + moment(day3ForcastDateEL));
+    console.log(day3ForcastDate);
     day3ForcastHumidity.text("Humidity: " + day3ForcastHumidityEl + "%");
     day3forcastTemp.text("Temp: " + day3forcastTempEl + "°");
     img3Display.attr("src", img3);
@@ -256,13 +255,13 @@ $.ajax({
     //remove the Hide class from the entire div. 
     cityForecastEl.removeAttr("class", "hide");
 
-    // $(".list-group-item").on("click", function(){
-    //   var buttonName = $(this).text;
-    //   console.log("register the click" + buttonName);
-    // });
+    $(".list-group-item").on("click", function(){
+      var buttonName = $(this).text;
+      console.log("register the click" + buttonName);
+    });
 
 });// closing the .then function
-});// closing the search button listener function
+};// closing the search button listener function
 
 $(document).ready(function(){
   renderButtons();
