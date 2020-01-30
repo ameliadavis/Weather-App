@@ -25,29 +25,42 @@ let cities = JSON.parse(localStorage.getItem("listGroup")) || []; // grab this a
 //print cities list to the screen each  time one is added 
 function renderButtons(){
         $(".list-group").empty();
+        console.log(cities);
+        let unique = [...new Set(cities)];
+        console.log(unique); 
         // Loop through the array of movies, then generate buttons for each movie in the array
-          for (var i = 0; i< cities.length; i++){
-           var newButton= $("<li>").text(cities[i]);
+          for (var i = 0; i< unique.length; i++){
+           var newButton= $("<li>").text(unique[i]);
            newButton.attr("class", "list-group-item");
             $(".list-group").append(newButton);
           }
 }
-// event listener for new buttons
-
 
 // set local storage
 function updateStorage() { 
+  let unique = [...new Set(cities)];
+  console.log(unique); 
 localStorage.setItem("listGroup", JSON.stringify(cities));
 }
 
 
 // search button event listener and add to cities array 
-$("#search-button").on("click", function() {
+$("#search-button").on("click", function() { 
      event.preventDefault(); // prevent default
      var userSearch = $("#searchBox").val(); 
-     cities.push(userSearch);
+     var userSearchL= userSearch.toLowerCase();
+     var userSearchLT = userSearchL.trim();
+      console.log(userSearchLT);
+     cities.push(userSearchLT);
      renderButtons();
      updateStorage();
+     $("#city-forecast").empty();
+     $(".day1").empty();
+     $(".day2").empty();
+     $(".day3").empty();
+     $(".day4").empty();
+     $(".day5").empty();
+     $("input, select").val(" ");
 
 // Here we are building the URL we need to query the database
 // var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
@@ -60,15 +73,21 @@ $.ajax({
     url:queryURL ,
     method: "GET"
 }).then(function(response) {
-    console.log(response);
+    console.log(response); 
     // create variables to grab the information from the response
     var cityName = response.city.name ;
     var Date = moment().format('MMMM Do YYYY'); 
     var currentTemp = response.list[0].main.temp;
     var humidityEl = response.list[0].main.humidity;
     var windSpeedEl = response.list[0].wind.speed;
+    var latEl = response.city.coord.lat;
+    var lonEl = response.city.coord.lon;
+    console.log(latEl);
+    console.log(lonEl);
+    var uvIndexEl = "https//api.openweathermap.org/data/2.5/uvi?&appid=166a433c57516f51dfab1f7edaed8413" +"lat=" + latEl + "&"+"lon=" + lonEl;
+    http://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat={lat}&lon={lon
     // var img = $("<img>").attr("src", queryURL + response.list[0].weather[0].icon + ".png");
-  
+    console.log(uvIndexEl);
 
     //Create div to hold the information we need from response
     var cityHeadline = $("<h2>");
@@ -76,7 +95,7 @@ $.ajax({
     var humidity = $("<p>");
     var windSpeed = $("<p>");
     // var imgDisplay = $("<img>");
-    // var uvIndex = $("<p>");
+    var uvIndex = $("<p>");
 
     // add the text information information to the appropriate HTML element
     cityHeadline.text(cityName + " " + Date)
@@ -86,14 +105,15 @@ $.ajax({
     // imgDisplay.attr("src", img);
     // imgDisplay.attr("src","http://openweathermap.org/img/w/" + + img + ".png");
     // console.log(temperature);
-    // uvIndex.text = "UV Index: " + uvIndexEl;
+    uvIndex.text = "UV Index: " + uvIndexEl;
+    console.log(uvIndex);
 
     //add to exisitng HTMl on page 
     cityForecastEl.append(cityHeadline);
     cityForecastEl.append(temperature);
     cityForecastEl.append(humidity);
     cityForecastEl.append(windSpeed);
-    // cityForecastEl.append(uvIndex);
+    cityForecastEl.append(uvIndex);
     // cityForecastEl.append(imgDisplay);
     console.log(cityForecastEl);
 
@@ -251,5 +271,4 @@ $(document).ready(function(){
     console.log("register the click" + buttonName);
   })
 })
-
 
