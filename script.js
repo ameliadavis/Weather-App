@@ -32,6 +32,8 @@ function renderButtons(){
           for (var i = 0; i< unique.length; i++){
            var newButton= $("<button>").text(unique[i]);
            newButton.attr("class", "list-group-item");
+           newButton.attr("onClick", "handleButtonClick(this)");
+           newButton.attr("value", unique[i]);
             $(".list-group").append(newButton);
           }
 }
@@ -78,14 +80,39 @@ $.ajax({
     var currentTemp = response.list[0].main.temp;
     var humidityEl = response.list[0].main.humidity;
     var windSpeedEl = response.list[0].wind.speed;
-    var latEl = response.city.coord.lat;
-    var lonEl = response.city.coord.lon;
+    var latEl = response.city.coord.lat.toFixed(2);
+    var lonEl = response.city.coord.lon.toFixed(2);
     console.log(latEl);
     console.log(lonEl);
-    var uvIndexEl = "https//api.openweathermap.org/data/2.5/uvi?&appid=166a433c57516f51dfab1f7edaed8413" +"lat=" + latEl + "&"+"lon=" + lonEl;
-    http://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat={lat}&lon={lon
-    // var img = $("<img>").attr("src", queryURL + response.list[0].weather[0].icon + ".png");
+    var uvIndexEl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latEl + "&lon=" + lonEl+ "&appid=166a433c57516f51dfab1f7edaed8413";
     console.log(uvIndexEl);
+    
+    // Ajax call for just UV index info
+    var uvIndexReal = 
+        $.ajax({url:uvIndexEl, method: "GET"
+        }).then(function(response){
+        console.log(response.value);
+      
+        var uvIndex = $("<p>");
+        uvIndex.text("UV Index: " + response.value);
+        if (response.value <= 2.99){
+          uvIndex.attr("class", "uv-Green");
+        }
+        if (response.value >= 3 && response.value <=5.99){
+          uvIndex.attr("class", "uv-Yellow");
+        }
+        if (response.value >= 6 && response.value <=7.99){
+          uvIndex.attr("class", "uv-Orange");
+        }
+        if (response.value >= 8 && response.value <=10.99){
+          uvIndex.attr("class", "uv-Red");
+        }
+        if (response.value > 11){
+          uvIndex.attr("class", "uv-Violet");
+        }
+        cityForecastEl.append(uvIndex);
+      });
+      console.log(uvIndexReal);
 
     //Create div to hold the information we need from response
     var cityHeadline = $("<h2>");
@@ -93,7 +120,7 @@ $.ajax({
     var humidity = $("<p>");
     var windSpeed = $("<p>");
     // var imgDisplay = $("<img>");
-    var uvIndex = $("<p>");
+   
 
     // add the text information information to the appropriate HTML element
     cityHeadline.text(cityName + " " + Date)
@@ -103,15 +130,14 @@ $.ajax({
     // imgDisplay.attr("src", img);
     // imgDisplay.attr("src","http://openweathermap.org/img/w/" + + img + ".png");
     // console.log(temperature);
-    uvIndex.text = "UV Index: " + uvIndexEl;
-    console.log(uvIndex);
+  
 
     //add to exisitng HTMl on page 
     cityForecastEl.append(cityHeadline);
     cityForecastEl.append(temperature);
     cityForecastEl.append(humidity);
     cityForecastEl.append(windSpeed);
-    cityForecastEl.append(uvIndex);
+    
     // cityForecastEl.append(imgDisplay);
     console.log(cityForecastEl);
 
@@ -121,11 +147,12 @@ $.ajax({
 
 // DAY 1
     // variables
+              //var title = $("<h5>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
+    //var day1ForcastDateEL = $("<h5>").addClass("col-day1").text(new Date(response.list[6].dt).toLocaleDateString());
     var day1ForcastDateEL = response.list[6].dt_txt;
-    console.log(day1ForcastDateEL);
     var day1ForcastHumidityEl= response.list[6].main.humidity;
     var day1forcastTempEl= response.list[6].main.temp;
-    var img1 = "https://openweathermap.org/img/wn/"+ response.list[0].weather["0"].icon + "@2x.png";
+    var img1 = "https://openweathermap.org/img/wn/"+ response.list[6].weather["0"].icon + "@2x.png";
 
      // set elements
      var day1ForcastDate = $("<p>");
@@ -189,7 +216,7 @@ $.ajax({
      var img3Display= $("<img>");
 
     // set text
-    day3ForcastDate.text("date: " + moment(day3ForcastDateEL));
+    day3ForcastDate.text("date: " + day3ForcastDateEL);
     console.log(day3ForcastDate);
     day3ForcastHumidity.text("Humidity: " + day3ForcastHumidityEl + "%");
     day3forcastTemp.text("Temp: " + day3forcastTempEl + "°");
@@ -265,9 +292,32 @@ $.ajax({
 
 $(document).ready(function(){
   renderButtons();
-  $(".list-group-item").on("click", function(){
-    var buttonName = $(this).text;
-    console.log("register the click" + buttonName);
-  })
+  // $(".list-group-item").on("click", function(){
+  //   var buttonName = $(this).text;
+  //   console.log("register the click" + buttonName);
+  // })
 })
+function handleButtonClick(button){
+  var buttonNameA = button.value;
+  console.log(buttonNameA);
+  console.log(button);
+  $("#city-forecast").empty();
+  $(".day1").empty();
+  $(".day2").empty();
+  $(".day3").empty();
+  $(".day4").empty();
+  $(".day5").empty();
+  callAjax(button.value);
+}
 
+function callAjax2(){
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + "Denver" + "&appid=166a433c57516f51dfab1f7edaed8413&units=imperial"
+  
+  $.ajax({
+      url:queryURL ,
+      method: "GET"
+  }).then(function(response) {
+      console.log(response); 
+  });
+}
+callAjax2();

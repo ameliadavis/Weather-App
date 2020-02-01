@@ -30,3 +30,18 @@ img{
 .list-group-item{
     text-align: left;
 }
+.uv-Green{
+    background-color: green;
+}
+.uv-Yellow{
+    background-color: yellow;
+}
+.uv-Orange{
+    background-color: orange;
+}
+.uv-Red{
+    background-color: red;
+}
+.uv-Violet{
+    background-color: violet;
+}
